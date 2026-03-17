@@ -357,7 +357,7 @@ $$\theta_{t+1} = \theta_t + \beta \cdot g_t$$
 | **更新时机** | 回合结束 (Offline)       | 单步或多步更新(Online)      |
 | **稳定*   | 较差                     | 较好                         |
 
-# 2.基于策略的学
+# 2.基于策略的学习
 
 ## 课程大纲
 * 策略函数近似：从表格到函数逼近（神经网络）
@@ -485,13 +485,13 @@ $$\nabla_\theta V(s; \theta) = \sum_{a} \nabla_\theta \pi(a \mid s; \theta) Q^\p
 * 方法：引入第二个神经网络来估$Q^\pi$
 * 结构：Actor：策略网络$\pi(a \mid s; \theta)$。Critic：价值网络，Actor 提供低方差的 $q_t$ 估计
 
-# ⭐Actor-Critic 示意
+# ⭐Actor-Critic 示意图
 
 **Actor 按概率采样动作与环境交互得到 $(s, a, r, s')$ $\rightarrow$ Critic 利用 TD 目标计算误差并更新自身网络$\rightarrow$ Actor 根据 Critic 的价值评估进行策略梯度更新$\rightarrow$ 使用 新策开启下一轮交互*
 
 ![Gemini_Generated_Image_wb2jzkwb2jzkwb2j](https://raw.githubusercontent.com/songqi4485/RL_Git/main/Gemini_Generated_Image_wb2jzkwb2jzkwb2j.png)
 
-## 1.上半部分：与环境交互（产生一步经验）
+## 1.上半部分：与环境交互
 
 - **环境 $\rightarrow$ 智能体：给出状态$s_t$**
 
@@ -651,7 +651,7 @@ $$
 
 $\tilde{a}_{t+1}$是一个假想动作，只是用来计算$q$。算法每一次循环只执行$a_t$这一个动作。因为TD算法需\tilde{a}_{t+1}$，从而更新q的梯度下降法也需要
 
-# ⭐AlphaGo工作示意
+# ⭐AlphaGo工作示意图
 
 ![Gemini_Generated_Image_wkqib6wkqib6wkqi](https://raw.githubusercontent.com/songqi4485/RL_Git/main/Gemini_Generated_Image_wkqib6wkqib6wkqi.png)
 
@@ -1039,7 +1039,7 @@ $$
 * 计算函数值的算术平均Q_n = \frac{1}{n} \sum_{i=1}^{n} f(\mathbf{x}_i)$
 * 返回 $Q_n$ 作为期望$\mathbb{E}_{X \sim p}[f(X)]$ 的近似值
 
-# ⭐SARSA示意
+# ⭐SARSA示意图
 
 SARSA 每一步都是：先按当前策略采样$(s_t,a_t,r_t,s_{t+1},a_{t+1})$ $y_t$ 让当前的 $Q(s_t,a_t)$（表格格子或网络输出）往 $y_t$ 靠近一点
 
@@ -1242,7 +1242,7 @@ $$
 \mathbf{w}-\alpha\delta_t\nabla_{\mathbf{w}}q(s_t,a_t;\mathbf{w})
 $$
 
-# ⭐Q-Learning算法示意
+# ⭐Q-Learning算法示意图
 
 ![Gemini_Generated_Image_wtttfewtttfewttt](https://raw.githubusercontent.com/songqi4485/RL_Git/main/Gemini_Generated_Image_wtttfewtttfewttt.png)
 
@@ -1416,7 +1416,7 @@ $$
 y_t^{(m)} = \sum_{k=0}^{m-1} \gamma^k r_{t+k} + \gamma^m \max_a Q^\star(s_{t+m}, a)
 $$
 
-# ⭐Experience Replay示意
+# ⭐Experience Replay示意图
 
 ## ER核心概念
 
@@ -1442,19 +1442,19 @@ $$
 
 ## 9.1经验回放的必要
 
-### 1）缺1：经验浪
+### 1）缺点1：经验浪费
 
 * transition $(s_t,a_t,r_t,s_{t+1})$，而“经验”是所$t=1,2,\dots$ transition 集合
 * 传统在线 TD：用一次就丢，**浪费数据**
 
-### 2）缺2：更新相
+### 2）缺点2：更新相关
 
 * 在线按时间顺序更新：$(s_t,a_t,r_t,s_{t+1})$、再$(s_{t+1},a_{t+1},r_{t+1},s_{t+2})$…
 * 但连续状态$s_t$ $s_{t+1}$ **强相*，导致梯度更新也强相关，训练不稳定
 
 ## 9.2关键推导与适用边界
 
-### 1）推
+### 1）推导
 
 把每transition 存入回放缓冲区（replay buffer），只保留最$n$ 条：
 
@@ -1497,7 +1497,7 @@ $$
 w\leftarrow w-\alpha\cdot \frac{1}{B}\sum_{i=1}^{B}\Big(\delta_i\nabla_w Q(s_i,a_i;w)\Big)
 $$
 
-### 2）优
+### 2）优势
 
 * **让更新尽量不相关**（random sampling 打破序列相关性）
 * **重复利用经验多次**（提升样本效率）
@@ -1517,7 +1517,7 @@ $$
 
 ## 9.3 Prioritized ER
 
-### 1）必要
+### 1）必要性
 
 并非所transition 同等重要。如果某条样本的 TD 误差 $|\delta_t|$ 大，说明当前网络对它学得不准，应给予更高优先级
 
@@ -1555,17 +1555,17 @@ PER 做的事就是：**$\delta_t$ 大的样本 $\Rightarrow$ $p_t$ $\Rightarrow
 
 ---
 
-### 3）重要性采样修
+### 3）重要性采样修正
 
 消除非均匀抽样带来的偏差<br>如果 buffer 里共$n$ transition*理想的“均匀抽样*相当于每条样本概率都$\frac{1}{n}$。PER 实际用的$p_t$（不相等）去抽样。结果就是，<mark>计算到的梯度期望会偏向“被高频抽到的样本”，从而引入偏差</mark>
 
 ---
 
-**推导：把“均匀期望”改写成“按 $p(i)$ 抽样 + 权重*
+**推导：把“均匀期望”改写成“按 $p(i)$ 抽样 + 权重**
 
 令第 $i$ 条样本的“单样本梯度”记$g_i$:
 
-* **均匀目标*的期望更新方
+* 均匀目标的期望更新
 
 $$
 \mathbb{E}_{\text{uniform}}[g]
@@ -1586,7 +1586,7 @@ $$
 
 **实现方式：用 $(n,p_t)^{-\beta}$ 缩放学习*
 
-* SGD 基本更新w \leftarrow w-\alpha\cdot g$
+* SGD 基本更新w $\leftarrow w-\alpha\cdot g$
 * 若采用重要性采样修正，则把学习率缩放为
 
 $$
@@ -1607,6 +1607,24 @@ $$
 * **每次抽到某条样本训练*：用最新网络重新计算它$\delta_t$，并更新该样本的优先级（$p_t \propto \delta_t+\epsilon$）
 
 
+
+# ⭐Dueling Network示意图
+
+## 预备知识
+
+![image-20260310164447678](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310164447678.png)
+
+## 优势函数关键推导
+
+![image-20260310164518397](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310164518397.png)
+
+## Dueling Network 架构图
+
+![image-20260310164540659](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310164540659.png)
+
+## Non-identifiability
+
+![image-20260310164607013](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310164607013.png)
 
 # 10. Dueling Network
 
@@ -1650,9 +1668,9 @@ $$
 
 ## 10.2优势函数性质与关键定
 
-### 1）定:$V^\star(s)=\max_a Q^\star(s,a)$
+### 1）定义:$V^\star(s)=\max_a Q^\star(s,a)$
 
-### 2）推$\max_a A^\star(s,a)=0$
+### 2）推导:$\max_a A^\star(s,a)=0$
 
 由优势函数定义：$A^\star(s,a)=Q^\star(s,a)-V^\star(s)$
 
@@ -1669,7 +1687,7 @@ $$
 \max_a A^\star(s,a)=V^\star(s)-V^\star(s)=0
 $$
 
-### 3）定:用零项重$Q^\star(s,a)$
+### 3）用零项重$Q^\star(s,a)$
 
 $$
 Q^\star(s,a)=V^\star(s)+A^\star(s,a)-\max_{a'}A^\star(s,a')
@@ -1723,7 +1741,7 @@ Dueling network $Q(s,a;\mathbf{w})$ 仍是在逼近 $Q^\star(s,a)$，参数$\mat
 
 ## 10.4添加零项的必要
 
-### 1）不可辨
+### 1）不可辨识
 
 以下等式（记Equation 1）存**non-identifiability**
 $$
@@ -1742,7 +1760,7 @@ $$
 
 结论：仅$Q^\star(s,a)$ 无法唯一确定 $V^\star(s)$ $A^\star(s,a)$，因此训练时两支路的“分工”可能漂移
 
-### 2）固定范
+### 2）固定范式
 
 给出 Equation 2并指出它**没有**不可辨识性问题：
 $$
@@ -1767,3 +1785,1151 @@ $$
   组合得到 $Q$
 
 *  “减$\max$ / $\mathrm{mean}$”并不是为了改变 $Q^\star$ 的数值（因为该项在最优意义下可视$0$），而是为了**消除不可辨识*，使 $V$ $A$ 的分解有唯一的规范
+
+# ⭐ CTDE训练流程图
+
+![8774da28-d42c-435a-ba47-d3e329916183](https://raw.githubusercontent.com/songqi4485/RL_Git/main/8774da28-d42c-435a-ba47-d3e329916183.png)
+
+# 11.多智能体强化学习(1)
+
+## 11.1 四类博弈关系
+
+### 1）完全合作（Fully cooperative）
+
+多个 agent **共同优化同一个回报**。
+
+![image-20260310135311046](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310135311046.png)
+
+### 3）完全竞争（Fully competitive）
+
+**一方得益=另一方损失**（典型零和）。
+
+![image-20260310135357169](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310135357169.png)
+
+### 3）混合合作&竞争（Mixed cooperative & competitive）
+
+系统里同时存在“队内合作、队间竞争”。
+
+![image-20260310135430363](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310135430363.png)
+
+### 4）自利（Self-interested）
+
+自动驾驶车辆之间博弈。
+
+![image-20260310135537544](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310135537544.png)
+
+## 11.2 MARL 的基本数学对象
+
+* **n 个智能体**：$i=1,\dots,n$
+
+* **状态（State）**：$S$
+
+* **动作（Action）**：第 $i$个智能体动作 $A^i$
+
+* **状态转移（State transition）**：
+
+$$
+p\!\left(s' \mid s, a^1,\dots,a^n\right)
+= \mathbb{P}\!\left(S_{t+1}=s' \mid S_t=s,\ A_t^1=a^1,\dots,A_t^n=a^n\right)
+$$
+
+<mark>下一个状态 $S'$ 取决于所有智能体的联合动作（不是某一个人的动作）</mark>
+
+## 11.3 奖励与耦合性
+
+* 第 $i$ 个智能体在时刻 $t$ 的奖励记为 $R_t^i$。
+
+* 奖励耦合：<mark>一般情况下 $R_t^i$ 不仅与自身动作 $A_t^i$ 有关，也与其他智能体动作 $A_t^{-i}={A_t^j}_{j\ne i}$ 有关。</mark>
+* 典型结构：
+
+​	合作：$R_t^1=\cdots=R_t^n$；竞争：不同智能体奖励对立（如 $R_t^2 \propto -R_t^1$）。
+
+## 11.4 回报与折扣回报
+
+* 第 $i$ 个智能体的回报从时刻 $t$ 起定义为未来奖励序列之和。
+* **回报**（第 $i$个智能体）:
+
+$$
+U_t^i = R_t^i + R_{t+1}^i + R_{t+2}^i + \cdots
+$$
+
+* **折扣回报**：
+  $$
+  U_t^i = R_t^i + \gamma R_{t+1}^i + \gamma^2 R_{t+2}^i + \cdots,\quad \gamma\in(0,1)
+  $$
+
+## 11.5 策略网络与参数共享
+
+* 每个智能体的策略网络：
+
+$$
+\pi(a^i\mid s;\theta^i)
+$$
+
+​	即第 $i$ 个智能体用参数 $\theta$ 决策动作分布。
+
+* 可交换/参数共享:$\theta^1=\theta^2=\cdots=\theta^n$（适用于同质角色）。
+* 不可交换:$\theta^i\neq\theta^j$（适用于异质角色/分工不同）。
+
+## 11.6 回报不确定性来源
+
+* **状态随机性**：由转移概率 $p(\cdot)$ 引入。
+* **动作随机性**：由策略 $\pi^j(\cdot\mid s;\theta^j)$ 引入，且对所有 $j\in{1,\dots,n}$ 都成立。
+
+因此，$U_t^i$ 依赖：未来状态序列 $S_t,S_{t+1},\dots$以及所有智能体未来动作序列 $A_t^1,\dots,A_t^n, A_{t+1}^1,\dots$。
+
+## 11.7 状态价值函数的多策略依赖
+
+第 $i$ 个智能体的状态价值函数定义为：
+$$
+V^i\!\left(s_t;\theta^1,\dots,\theta^n\right)
+= \mathbb{E}\!\left[U_t^i \mid S_t=s_t\right]
+$$
+关键结论：$V^i$ 显式依赖 $\theta^1,\dots,\theta^n$，原因是**期望对未来所有智能体动作分布取值，而动作分布由各自策略参数决定。**
+
+直接推论：任一智能体 $j$ 改变策略参数 $\theta^j$，都可能导致所有价值函数 ${V^i}_{i=1}^n$ 发生变化。
+
+## 11.8 收敛概念
+
+### 1）收敛的基本含义
+
+无法通过改变策略获得更大的期望回报。
+
+### 2）单智能体：目标函数停止提升
+
+单智能体策略参数为 $\theta$，目标函数可写为：
+$$
+J(\theta)=\mathbb{E}\!\left[V(S;\theta)\right]
+$$
+学习目标：$\max_{\theta} J(\theta)$。
+
+收敛判据：$J(\theta)$ 在训练过程中**不再增加**。
+
+### 3）多智能体：纳什均衡对应收敛
+
+多智能体中，第 $i$ 个智能体的目标与其他智能体策略耦合：
+$$
+J^i(\theta^1,\dots,\theta^n)=\mathbb{E}\!\left[V^i(S;\theta^1,\dots,\theta^n)\right]
+$$
+若固定其他智能体策略 $\theta^{-i}$，第 $i$ 个智能体解决：
+$$
+\max_{\theta^i} J^i(\theta^1,\dots,\theta^n)
+$$
+纳什均衡（Nash equilibrium）：
+
+* 当其他智能体策略不变时，任意智能体 $i$ **无法仅通过单方面改变** $\theta^i$ 获得更高的期望回报
+* 等价理解：每个智能体都在对其他人的策略执行 best-response；
+
+## 11.9 MARL 的核心困难
+
+对每个智能体 $i$ 分别最大化其目标 $J^i(\theta^1,\dots,\theta^n)$。智能体 $i$ 找到阶段最优解：
+$$
+\theta^{i\star}=\arg\max_{\theta^i} J^i(\theta^1,\dots,\theta^n)
+$$
+但随后某个智能体 $j$ 更新 $\theta^j$，导致 $J^i(\cdot)$ 的优化地形改变；于是原本的 $\theta^{i\star}$ 不再是最优，智能体 $i$ 必须重新寻找新解；这样就会产生连锁反应，其他智能体的目标函数又随之变化，进一步触发策略更新。
+
+结论：由于目标函数相互耦合与持续变化，训练过程可能出现**振荡、发散或长期不稳定**，从而不收敛。
+
+# 12.多智能体强化学习(2)
+
+## 1.核心主题
+
+对多智能体强化学习（MARL），比较三类信息结构（architectures）：
+
+* **Fully decentralized**：每个智能体仅用自身观测与奖励学习策略，智能体间不通信。
+* **Fully centralized**：所有信息上传中央控制器，控制器为所有智能体统一决策。
+* **Centralized training with decentralized execution（CTDE）**：训练期使用中央控制器辅助训练；执行期禁用控制器，各智能体仅凭自身局部观测独立决策。
+
+## 2.数学对象与可观测性假设
+
+* 真实环境状态记为 $s$。
+* 第 $i$ 个智能体的观测记为 $o_i$。
+* **部分可观测（partial observation）**：$o_i \neq s$。
+* **部分可观测（partial observation）**：$o_i \neq s$。
+* 定义联合观测与联合动作：
+
+$$
+\mathbf{o}=(o_1,\dots,o_n),\qquad \mathbf{a}=(a_1,\dots,a_n)
+$$
+
+## 3.三种体系结构对比
+
+### 1）Fully Decentralized
+
+* **定义**：每个 agent 只用自己的观测与奖励学习自己的策略，agents **不通信**
+* **训练/执行形态**：训练与执行都在本地完成
+* 分散式 Actor-Critic:<br>第 $i$ 个 agent 有自己的 actor：$\pi_i(a_i\mid o_i;\theta_i)$，第 $i$ 个 agent 有自己的 critic：$V_i(o_i,a_i;\phi_i)$。
+
+**关键结论**：这种方法不对。因为环境非平稳，其他智能体策略在变，导致单个智能体看到的转移分布在变。
+
+![image-20260310171046444](https://raw.githubusercontent.com/songqi4485/RL_Git/main/image-20260310171046444.png)
+
+### 2）Fully centralized（集中训练 + 集中执行）
+
+* **信息汇聚**：中央控制器掌握所有观测 $\mathbf{o}$、所有动作 $\mathbf{a}$ 与所有奖励。
+
+* **策略表示**：中央控制器内部为每个智能体维护一套策略网络（actor），其输入为联合观测 $\mathbf{o}$：
+  $$
+  \pi_i(a_i\mid \mathbf{o};\theta_i)
+  $$
+
+* **价值表示**：中央控制器内部为每个智能体维护一套价值网络（critic），其输入为 $(\mathbf{o},\mathbf{a})$
+
+$$
+Q_i(\mathbf{o},\mathbf{a};\phi_i)
+$$
+
+* 训练规则:
+
+​	训练 actor使用 policy gradient;训练 critic使用 TD algorithm。
+
+* 执行过程：每个智能体上传 $o_i$ 给控制器，控制器基于 $\mathbf{o}$ 采样 $\mathbf{a}$ 并下发 $a_i$。
+* 执行瓶颈：通信与同步导致执行时延。
+
+![cc3e2d2e-ff5e-4bf0-a59b-c499d81d47b9](https://raw.githubusercontent.com/songqi4485/RL_Git/main/cc3e2d2e-ff5e-4bf0-a59b-c499d81d47b9.png)
+
+![552117bb-ec68-473e-8bc5-224272851c4b](https://raw.githubusercontent.com/songqi4485/RL_Git/main/552117bb-ec68-473e-8bc5-224272851c4b.png)
+
+### 3）CTDE（集中训练 + 分散执行）
+
+每个智能体保留自己的 actor：
+$$
+\pi_i(a_i\mid o_i;\theta_i)
+$$
+中央控制器仅保留 critics：
+$$
+Q_i(\mathbf{o},\mathbf{a};\phi_i)
+$$
+执行阶段：中央控制器及其价值网络不再使用。
+
+![e8f9ed72-97de-488c-a349-ec318240843d](https://raw.githubusercontent.com/songqi4485/RL_Git/main/e8f9ed72-97de-488c-a349-ec318240843d.png)
+
+![e973df49-3765-465b-bd28-f73a5341e638](https://raw.githubusercontent.com/songqi4485/RL_Git/main/e973df49-3765-465b-bd28-f73a5341e638.png)
+
+## 4. CTDE Actor–Critic 的训练
+
+### 4.1 critic: TD 目标、TD 误差与梯度下降
+
+critic 近似联合信息下的动作价值：
+$$
+Q_i(\mathbf{o}_t,\mathbf{a}_t;\phi_i)\approx
+\mathbb{E}\!\left[\sum_{k=0}^{\infty}\gamma^k r_i(t+k)\ \middle|\ \mathbf{o}_t,\mathbf{a}_t\right]
+$$
+一步 TD 目标（用下一时刻 bootstrap）：
+$$
+y_{i,t}=r_i(t)+\gamma\;Q_i(\mathbf{o}_{t+1},\mathbf{a}_{t+1};\phi_i)
+$$
+TD 误差：
+$$
+\delta_{i,t}=Q_i(\mathbf{o}_t,\mathbf{a}_t;\phi_i)-y_{i,t}
+$$
+损失函数与梯度：
+$$
+L_i(\phi_i)=\frac{1}{2}\delta_{i,t}^2,\qquad
+\nabla_{\phi_i}L_i(\phi_i)=\delta_{i,t}\,\nabla_{\phi_i}Q_i(\mathbf{o}_t,\mathbf{a}_t;\phi_i)
+$$
+梯度下降更新（学习率 $\alpha$）：
+$$
+\phi_i \leftarrow \phi_i-\alpha\,\delta_{i,t}\,\nabla_{\phi_i}Q_i(\mathbf{o}_t,\mathbf{a}_t;\phi_i)
+$$
+TD 更新使用输入 $\mathbf{a}$、$\mathbf{o}$ 与第 $i$ 个奖励 $r_i$。
+
+### 4.2 actor: policy gradient 更新
+
+第 $i$ 个 actor 目标：最大化期望折扣回报
+$$
+J_i(\theta_i)=\mathbb{E}\!\left[\sum_{t=0}^{\infty}\gamma^t r_i(t)\right]
+$$
+使用 log-derivative trick（对任意可微概率分布）：
+$$
+\nabla_{\theta_i}J_i(\theta_i)
+=
+\mathbb{E}\!\left[\nabla_{\theta_i}\log \pi_i(a_i\mid o_i;\theta_i)\cdot G_i\right]
+$$
+其中 $G_i$ 表示从当前时刻起的折扣回报随机变量。
+
+用 critic 作为 $G_i$ 的可计算替代（CTDE 的关键：critic 可使用 $(\mathbf{o},\mathbf{a})$）：
+$$
+\nabla_{\theta_i}J_i(\theta_i)
+\approx
+\mathbb{E}\!\left[\nabla_{\theta_i}\log \pi_i(a_i\mid o_i;\theta_i)\cdot Q_i(\mathbf{o},\mathbf{a};\phi_i)\right]
+$$
+随机梯度上升更新（学习率 $\beta$）：
+$$
+\theta_i \leftarrow \theta_i+\beta\;
+\nabla_{\theta_i}\log \pi_i(a_i\mid o_i;\theta_i)\cdot Q_i(\mathbf{o},\mathbf{a};\phi_i)
+$$
+actor 在本地更新；policy gradient 的输入包含 $a_i$、$o_i$ 与 critic 的价值输出。
+
+## 5.参数共享
+
+若智能体 **non-exchangeable**，则不共享参数。若智能体 **exchangeable**，则共享参数。
+
+## 6.总结
+
+![7e3afec8-280f-457c-9ea1-a0471f1c1cc5](https://raw.githubusercontent.com/songqi4485/RL_Git/main/7e3afec8-280f-457c-9ea1-a0471f1c1cc5.png)
+
+在中央控制器训练需要全部观测或者全部动作。
+
+# ⭐ 概念图
+
+## 核心概念关系图
+
+![1505af17-1c80-4c72-a8b4-5209ddb468c8](https://raw.githubusercontent.com/songqi4485/RL_Git/main/1505af17-1c80-4c72-a8b4-5209ddb468c8.png)
+
+## 从原策略梯度到带基线形式
+
+![8e3edba3-c0c8-4303-8b8e-3c9b6ea669b8](https://raw.githubusercontent.com/songqi4485/RL_Git/main/8e3edba3-c0c8-4303-8b8e-3c9b6ea669b8.png)
+
+## Monte Carlo 采样估计 + 随机梯度上升
+
+![ab56e0ab-c147-41e1-8066-cb4040d13d38](https://raw.githubusercontent.com/songqi4485/RL_Git/main/ab56e0ab-c147-41e1-8066-cb4040d13d38.png)
+
+# 13. Policy Gradient with Baseline
+
+## 13.1 核心主题
+
+* 用参数化策略$\pi(a\mid s;\theta)$ **直接控制智能体**，并通过最大化目标 $J(\theta)$ 求 $\nabla_\theta J(\theta)$ 来更新参数 $\theta$。
+* 在策略梯度中引入**基线**$b$，要求 $b$ **与动作随机变量 $A$ 独立**，从而在**不改变期望梯度**的前提下降低方差、加快收敛。
+
+## 13.2 关键定义
+
+### 1）状态价值函数 $V^\pi(s)$
+
+对动作按策略取期望的动作价值：
+$$
+V^\pi(s)=\mathbb{E}_{A\sim \pi(\cdot\mid s;\theta)}\big[Q^\pi(s,A)\big]
+=\sum_a \pi(a\mid s;\theta)\,Q^\pi(s,a)
+$$
+
+### 2）策略梯度
+
+$$
+\nabla_\theta J(\theta)
+=\mathbb{E}_{A\sim \pi(\cdot\mid s;\theta)}
+\Big[\nabla_\theta \log \pi(A\mid s;\theta)\cdot Q^\pi(s,A)\Big]
+$$
+
+## 13.3  核心结论与完整推导
+
+### 1）结论 1
+
+若 $b$ 与 $A$ 独立，则
+$$
+\mathbb{E}_{A\sim \pi(\cdot\mid s;\theta)}
+\Big[b\cdot \nabla_\theta \log \pi(A\mid s;\theta)\Big]=0
+$$
+**证明**
+
+第 1 步：利用独立性把 $b$ 提到期望外
+$$
+\mathbb{E}_{A}\big[b\cdot \nabla_\theta \log \pi(A\mid s;\theta)\big]
+=b\cdot \mathbb{E}_{A}\big[\nabla_\theta \log \pi(A\mid s;\theta)\big]
+$$
+
+---
+
+第 2 步：把期望写成对动作的求和
+$$
+\mathbb{E}_{A}\big[\nabla_\theta \log \pi(A\mid s;\theta)\big]
+=\sum_a \pi(a\mid s;\theta)\,\nabla_\theta \log \pi(a\mid s;\theta)
+$$
+
+---
+
+第 3 步：使用恒等式 $\pi \nabla \log \pi=\nabla \pi$
+$$
+\nabla_\theta \log \pi(a\mid s;\theta)
+=\frac{\nabla_\theta \pi(a\mid s;\theta)}{\pi(a\mid s;\theta)}
+$$
+两边同乘 $\pi(a\mid s;\theta)$：
+$$
+\pi(a\mid s;\theta)\,\nabla_\theta \log \pi(a\mid s;\theta)
+=\nabla_\theta \pi(a\mid s;\theta)
+$$
+代回求和式：
+$$
+\sum_a \pi(a\mid s;\theta)\,\nabla_\theta \log \pi(a\mid s;\theta)
+=\sum_a \nabla_\theta \pi(a\mid s;\theta)
+$$
+
+---
+
+第 4 步：把求和并入梯度
+$$
+\sum_a \nabla_\theta \pi(a\mid s;\theta)
+=\nabla_\theta \sum_a \pi(a\mid s;\theta)
+$$
+
+---
+
+第 5 步：利用概率归一化
+
+对任意 $s$，$\sum_a \pi(a\mid s;\theta)=1$，所以
+$$
+\nabla_\theta \sum_a \pi(a\mid s;\theta)=\nabla_\theta 1=0
+$$
+
+---
+
+第 6 步：回代得到最终结论
+$$
+\mathbb{E}_{A}\big[b\cdot \nabla_\theta \log \pi(A\mid s;\theta)\big]
+=b\cdot 0=0
+$$
+
+### 2）结论 2
+
+从原策略梯度出发，将 $0$ 项加减进去：
+$$
+\nabla_\theta J(\theta)
+=\mathbb{E}\big[\nabla_\theta \log \pi(A\mid s;\theta)\cdot Q^\pi(s,A)\big]
+-\mathbb{E}\big[b\cdot \nabla_\theta \log \pi(A\mid s;\theta)\big]
+$$
+
+$$
+\nabla_\theta J(\theta)
+=\mathbb{E}_{A\sim \pi(\cdot\mid s;\theta)}
+\Big[\nabla_\theta \log \pi(A\mid s;\theta)·(Q^\pi(s,A)-b)]
+$$
+
+## 13.4 Monte Carlo 近似
+
+### 1）定义单样本估计
+
+$$
+\nabla_\theta J(\theta)
+=\mathbb{E}\Big[\nabla_\theta \log \pi(A\mid s;\theta)\cdot(Q^\pi(s,A)-b)\Big]
+$$
+
+### 2）采样与无偏性
+
+采样动作：$a_A\sim \pi(\cdot\mid s_A;\theta)$。
+
+构造随机梯度：
+$$
+g_{a_A}
+=\nabla_\theta \log \pi(a_A\mid s_A;\theta)\cdot\big(Q^\pi(s_A,a_A)-b\big)
+$$
+$g_{a_A}$ 是策略梯度的**无偏估计**，即
+$$
+\mathbb{E}\big[g_{a_A}\big]=\nabla_\theta J(\theta)
+$$
+
+## 13.5 随机策略梯度上升
+
+$$
+\theta \leftarrow \theta + \beta \cdot g_{a_A}
+$$
+
+* 只要 $b$ 与 $A$ 独立，$\mathbb{E}[g_{a_A}]$（即真实策略梯度）**不变**。
+* 但 $b$ 会改变 $g_{a_A}$ 的方差；好的 $b$ 能使方差更小，从而**更快收敛**。
+
+## 13.6  Baseline的典型选择
+
+### 1）选择 1：$b=0$
+
+直接退化为标准策略梯度：
+$$
+\nabla_\theta J(\theta)
+=\mathbb{E}\big[\nabla_\theta \log \pi(A\mid s;\theta)\cdot Q^\pi(s,A)\big]
+$$
+
+### 2）选择 2：$b=V^\pi(s_A)$
+
+$s_A$ 已观测，因此 $b=V^\pi(s_A)$ 不依赖 $A$，满足“与 $A$ 独立”的条件。
+
+为什么能采用状态价值函数做基线？
+
+$V^\pi(s_A)$ 接近 $Q^\pi(s_A,A_A)$ ，将其代入得到“优势型”更新信号（常写为优势函数）：
+$$
+A^\pi(s_A,a_A)=Q^\pi(s_A,a_A)-V^\pi(s_A)
+$$
+从而
+$$
+g_{a_A}=\nabla_\theta \log \pi(a_A\mid s_A;\theta)\cdot A^\pi(s_A,a_A)
+$$
+
+# 14. REINFORCE with Baseline
+
+## 14.1 符号与定义
+
+### 1）折扣回报
+
+$$
+U_t \;=\; R_t + \gamma R_{t+1} + \gamma^2 R_{t+2} + \cdots
+$$
+
+### 2）动作价值函数
+
+$$
+Q_\pi(s_t,a_t)\;=\;\mathbb{E}\!\left[U_t \mid s_t,a_t\right]
+$$
+
+### 3）状态价值函数
+
+$$
+V_\pi(s_t)\;=\;\mathbb{E}_{A\sim \pi(\cdot\mid s_t)}\!\left[Q_\pi(s_t,A)\mid s_t\right]
+$$
+
+## 14.2 关键推导
+
+### 1）目标函数写成轨迹期望
+
+令策略由参数 $\boldsymbol{\theta}$ 控制，常见目标写作
+$$
+J(\boldsymbol{\theta}) \;=\; \mathbb{E}_{\tau\sim \pi_{\boldsymbol{\theta}}}\!\left[\sum_{t=0}^{T} \gamma^t r_t\right]
+$$
+其中轨迹 $\tau=(s_0,a_0,r_0,\ldots,s_T)$ 由策略 $\pi_{\boldsymbol{\theta}}(a\mid s)$ 生成。
+
+---
+
+轨迹概率可写作
+$$
+p_{\boldsymbol{\theta}}(\tau)=p(s_0)\prod_{t=0}^{T}\pi_{\boldsymbol{\theta}}(a_t\mid s_t)\,p(s_{t+1}\mid s_t,a_t)
+$$
+
+---
+
+对 $J(\boldsymbol{\theta})=\int p_{\boldsymbol{\theta}}(\tau),R(\tau),d\tau$ 求梯度：
+$$
+\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})
+= \int \nabla_{\boldsymbol{\theta}} p_{\boldsymbol{\theta}}(\tau)\,R(\tau)\,d\tau
+$$
+用恒等式 $\nabla p = p \nabla \log p$：
+$$
+\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})
+= \int p_{\boldsymbol{\theta}}(\tau)\,\nabla_{\boldsymbol{\theta}}\log p_{\boldsymbol{\theta}}(\tau)\,R(\tau)\,d\tau
+= \mathbb{E}_{\tau\sim p_{\boldsymbol{\theta}}}\!\left[\nabla_{\boldsymbol{\theta}}\log p_{\boldsymbol{\theta}}(\tau)\,R(\tau)\right]
+$$
+展开 $\log p_{\boldsymbol{\theta}}(\tau)$：
+$$
+\log p_{\boldsymbol{\theta}}(\tau)
+= \log p(s_0)+\sum_{t=0}^{T}\log \pi_{\boldsymbol{\theta}}(a_t\mid s_t)+\sum_{t=0}^{T}\log p(s_{t+1}\mid s_t,a_t)
+$$
+只有 $\log \pi_{\boldsymbol{\theta}}(a_t\mid s_t)$ 与 $\boldsymbol{\theta}$ 有关，所以
+$$
+\nabla_{\boldsymbol{\theta}}\log p_{\boldsymbol{\theta}}(\tau)=\sum_{t=0}^{T}\nabla_{\boldsymbol{\theta}}\log \pi_{\boldsymbol{\theta}}(a_t\mid s_t)
+$$
+
+---
+
+代回得到经典 REINFORCE 形式（此处把 $R(\tau)$ 换成从 $t$ 起的回报 $U_t$ 可得到更常用的形式）：
+
+
+$$
+\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})
+= \mathbb{E}\!\left[\sum_{t=0}^{T}\nabla_{\boldsymbol{\theta}}\log \pi_{\boldsymbol{\theta}}(a_t\mid s_t)\;U_t\right]
+$$
+
+### 2）baseline 不引入偏差
+
+
+
+## 14.3 优势函数形式
+
+$$
+\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta})
+=\mathbb{E}\!\left[\nabla_{\boldsymbol{\theta}}\log\pi_{\boldsymbol{\theta}}(A_t\mid S_t)\,\big(Q_\pi(S_t,A_t)-V_\pi(S_t)\big)\right]
+$$
+
+定义优势函数（advantage）：
+$$
+A_\pi(s,a)=Q_\pi(s,a)-V_\pi(s)
+$$
+
+
+## 14.4 三步近似
+
+**近似 1：用单样本动作近似期望（Monte Carlo 采样）**
+
+* 在给定 $s_t$ 下采样 $a_t\sim \pi_{\boldsymbol{\theta}}(\cdot\mid s_t)$。
+* 用单样本替代对 $A_t$ 的期望，从而得到随机梯度方向。
+
+**近似 2：用蒙特卡洛回报 $u_t$ 近似 $Q_\pi(s_t,a_t)$（REINFORCE）**
+
+* 采样一条完整轨迹直到终止步 $I$：$(s_t,a_t,r_t,\dots,s_I,a_I,r_I)$。
+* 计算从 $t$ 到终止的折扣回报：
+
+$$
+u_t=\sum_{k=t}^{I}\gamma^{k-t}r_k
+$$
+
+* 该 $u_t$ 满足：
+
+$$
+\mathbb{E}[u_t\mid s_t,a_t]=Q_\pi(s_t,a_t)
+$$
+
+​	即 $u_t$ 是 $Q_\pi(s_t,a_t)$ 的无偏估计。
+
+**近似 3：用价值网络 $v(s;\mathbf{w})$ 近似 $V_\pi(s)$（baseline 可学习）**
+
+* 用标量网络输出 $v(s_t;\mathbf{w})\approx V_\pi(s_t)$。
+* 于是优势的可计算估计为：
+
+$$
+\hat{A}_t=u_t-v(s_t;\mathbf{w})
+$$
+
+**合并三步近似得到 “近似策略梯度”**
+$$
+\nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta})
+\;\approx\;
+\nabla_{\boldsymbol{\theta}}\log\pi_{\boldsymbol{\theta}}(a_t\mid s_t)\,\big(u_t-v(s_t;\mathbf{w})\big)
+$$
+
+## 14.5 参数更新
+
+### 1）定义预测误差 $\delta_t$
+
+$$
+\delta_t=v(s_t;\mathbf{w})-u_t
+$$
+
+$$
+\hat{A}_t=u_t-v(s_t;\mathbf{w})=-\delta_t
+$$
+
+### 2）策略网络更新
+
+以学习率 $\beta$ 做梯度上升：
+$$
+\boldsymbol{\theta}\leftarrow \boldsymbol{\theta}+\beta\,\nabla_{\boldsymbol{\theta}}\log\pi_{\boldsymbol{\theta}}(a_t\mid s_t)\,(u_t-v(s_t;\mathbf{w}))
+$$
+代入 $\hat{A}_t=-\delta_t$，得到等价形式：
+$$
+\boldsymbol{\theta}\leftarrow \boldsymbol{\theta}-\beta\,\delta_t\,\nabla_{\boldsymbol{\theta}}\log\pi_{\boldsymbol{\theta}}(a_t\mid s_t)
+$$
+
+### 3）价值网络更新
+
+用 $u_t$ 作为监督信号拟合 $v(s_t;\mathbf{w})$，损失：
+$$
+L(\mathbf{w})=\frac{1}{2}\big(v(s_t;\mathbf{w})-u_t\big)^2=\frac{1}{2}\delta_t^2
+$$
+梯度：
+$$
+\nabla_{\mathbf{w}}L(\mathbf{w})=\delta_t\,\nabla_{\mathbf{w}}v(s_t;\mathbf{w})
+$$
+以学习率 $\alpha$ 做梯度下降：
+$$
+\mathbf{w}\leftarrow \mathbf{w}-α\delta_t\nabla_{\mathbf{w}}v(s_t;\mathbf{w})
+$$
+
+## 14.6 算法流程
+
+重复 $t=1,\dots,n$：
+
+* 采样一局直到终止，得到轨迹 $(s_0,a_0,r_0,\dots,s_I,a_I,r_I)$。
+* 对每个时间步 $t=0,\dots,I$：
+
+​	计算蒙特卡洛回报：
+$$
+u_t=\sum_{k=t}^{I}\gamma^{k-t}r_k
+$$
+​	 计算预测误差：
+$$
+\delta_t=v(s_t;\mathbf{w})-u_t
+$$
+​	 更新  策略网络：
+$$
+\boldsymbol{\theta}\leftarrow \boldsymbol{\theta}-\beta\,\delta_t\,\nabla_{\boldsymbol{\theta}}\log\pi_{\boldsymbol{\theta}}(a_t\mid s_t)
+$$
+​	  更新价值网络：
+$$
+\mathbf{w}\leftarrow \mathbf{w}-\alpha\,\delta_t\,\nabla_{\mathbf{w}}v(s_t;\mathbf{w})
+$$
+
+# 15. Advantage Actor-Critic
+
+
+
+# 16.连续动作控制与确定性策略梯度（DPG）
+
+## 16.2 问题定义
+
+### 1） 离散动作空间
+
+在这种情况下，动作的本质是“从有限个候选项中选一个”。因此，无论是值函数方法还是策略方法，都可以围绕“有限候选动作集合”展开。在离散控制中，动作空间是有限集合。
+
+### 2）连续动作空间
+
+在连续控制中，动作空间不再是有限集合，而是实数空间的一个子集。以二维机械臂为例，将动作空间表示为
+$$
+\mathcal{A}=[0^\circ,360^\circ]\times[0^\circ,180^\circ]\subset \mathbb{R}^2
+$$
+这里动作 $a$ 是二维向量，两个分量分别对应机械臂两个关节的角度范围。**动作的维度不代表动作种类数，而代表系统的自由度数**；动作种类在连续空间中事实上是无穷多的。
+
+![b6e41d7c-cc03-4644-bec3-78249fa70845](https://raw.githubusercontent.com/songqi4485/RL_Git/main/b6e41d7c-cc03-4644-bec3-78249fa70845.png)
+
+## 16.2 DQN 不能直接用于连续动作
+
+### 1）DQN 在离散动作下成立
+
+DQN 的输出层可以对每一个离散动作输出一个对应的动作价值。例如对状态 $s$，网络输出
+$$
+Q(s,\text{left};w),\quad Q(s,\text{right};w),\quad Q(s,\text{up};w)
+$$
+然后通过
+
+$$
+a^\ast=\arg\max_{a\in\mathcal{A}}Q(s,a;w)
+$$
+选出最优动作。由于 $\mathcal{A}$ 是有限集，这一最大化过程是可执行的。
+
+![c11b2d61-e56b-463d-9109-1722e5f5d8c6](https://raw.githubusercontent.com/songqi4485/RL_Git/main/c11b2d61-e56b-463d-9109-1722e5f5d8c6.png)
+
+### 2） DQN 在连续动作下失效
+
+若动作空间为连续集 $\mathcal{A}\subset\mathbb{R}^d$，则对同一状态 $s$，可能动作有无穷多个。此时若仍然使用
+$$
+a^\ast=\arg\max_{a\in\mathcal{A}}Q(s,a;w)
+$$
+则问题变为：如何在一个连续空间中完成全局优化。这已经不再是“输出层对应若干个动作节点”的问题，而变成了“对连续变量求极值”的问题。
+
+**DQN 不能用于连续动作**。这不是经验层面的“不好用”，而是模型结构与问题结构不匹配。
+
+## 16.3 直接离散化缺点
+
+### 1）离散化思路
+
+先把连续动作空间划分为网格，再将网格点视为有限动作集合。
+
+![0a3ebfa1-4b43-4e56-add1-7e4310118d51](https://raw.githubusercontent.com/songqi4485/RL_Git/main/0a3ebfa1-4b43-4e56-add1-7e4310118d51.png)
+
+### 2）维度灾难
+
+设动作空间有 $d$ 个自由度，每个维度离散为 $k$ 个取值点，则总动作数为
+$$
+N = k^d
+$$
+
+## 16.4 DPG 的基本思想
+
+DPG 的基本思想其实是**Actor-Critic**。
+
+![207a6185-a79d-4133-b3df-759015f9662b](https://raw.githubusercontent.com/songqi4485/RL_Git/main/207a6185-a79d-4133-b3df-759015f9662b.png)
+
+### 1）策略网络与价值网络
+
+DPG 采用两类函数逼近器：
+
+* 策略网络（actor）
+
+$$
+a=\pi(s;\theta)
+$$
+
+​	其中 $\theta$ 为策略网络参数；
+
+* 价值网络（critic）
+
+$$
+q(s,a;w)
+$$
+
+​	其中 $w$ 为价值网络参数。
+
+这里的关键点在于：actor 输出的不是概率分布，而是一个**确定的动作向量**；critic 输出的是一个标量，用于评价该动作在该状态下的优劣。
+
+### 2）结构本质
+
+* 在 DQN 中，网络直接对一组离散动作输出价值。
+* 在 DPG 中，动作由 actor 生成，critic 只负责评价。
+
+因此，连续动作空间下的优化问题被重新分解为两个子问题：
+
+* 给定状态 $s$，如何生成一个候选动作 $a$
+* 给定状态-动作对 $(s,a)$，如何评估该动作是否足够优。
+
+## 16.5 Critic 更新:TD 学习推导
+
+### 1） 单步样本与当前价值估计
+
+设经验样本为
+$$
+(s_t,a_t,r_t,s_{t+1})
+$$
+这是一次环境交互所产生的标准 transition。对当前时刻，critic 给出的预测为
+$$
+q_t=q(s_t,a_t;w)
+$$
+这是对当前状态-动作对价值的估计
+
+### 2）下一时刻的动作与价值估计
+
+对下一状态 $s_{t+1}$，不是去寻找“真实执行过的下一动作”，而是由**当前策略网络给出一个候选动作**
+$$
+a'_{t+1}=\pi(s_{t+1};\theta)
+$$
+随后 critic 对该状态-动作对进行估计：
+$$
+q_{t+1}=q(s_{t+1},a'_{t+1};w)
+$$
+因而，下一步价值是由“**下一状态** + **策略网络产生的动作**”共同确定的。
+
+### 3）TD 目标与 TD 误差
+
+根据 TD 学习思想，可构造单步 TD target
+$$
+y_t=r_t+\gamma q(s_{t+1},a'_{t+1};w)
+$$
+其中 $\gamma$ 为折扣因子。
+
+---
+
+ TD error：
+$$
+\delta_t=q_t-r_t+\gamma q_{t+1}
+$$
+
+### 4）Critic 的梯度更新
+
+令损失函数为平方误差
+$$
+L(w)=\frac{1}{2}\delta_t^2
+$$
+由链式法则
+$$
+\nabla_w L(w)=\delta_t \nabla_w q(s_t,a_t;w)
+$$
+采用梯度下降更新参数
+$$
+w\leftarrow w-\alpha \nabla_w L(w)
+= w-\alpha\,\delta_t\,\nabla_w q(s_t,a_t;w)
+$$
+其中 $\alpha$ 为 critic 的学习率。
+
+## 16.6 Actor 更新:确定性策略梯度推导
+
+### 1）Actor 的优化目标
+
+critic 的职责是评价动作，actor 的职责是产生动作。因此 actor 的目标不是直接拟合奖励，而是**让 critic 对其输出动作的评价尽可能高**。
+
+对固定状态 $s$，actor 的优化目标可写为
+$$
+J(\theta)=q\bigl(s,\pi(s;\theta);w\bigr)
+$$
+即：先由 actor 输出动作 $\pi(s;\theta)$，再由 critic 对该动作评分，希望该评分随 $\theta$ 的更新而增大。
+
+### 2）由链式法则得到 DPG 公式
+
+由于 $J(\theta)$ 中，$\theta$ 并不直接出现在 critic 的输入位置，而是先经过策略函数 $\pi(s;\theta)$ 映射为动作，因此必须使用链式法则：
+$$
+\nabla_\theta J(\theta)
+=
+\nabla_\theta q\bigl(s,\pi(s;\theta);w\bigr)
+$$
+进一步展开得到
+$$
+\nabla_\theta J(\theta)
+=
+\frac{\partial \pi(s;\theta)}{\partial \theta}
+\cdot
+\frac{\partial q(s,a;w)}{\partial a}\Big|_{a=\pi(s;\theta)}
+$$
+策略参数的更新方向由两部分共同决定：
+
+$\frac{\partial \pi(s;\theta)}{\partial \theta}$：参数变化如何影响动作输出
+
+$\frac{\partial q(s,a;w)}{\partial a}$：动作变化如何影响 critic 评分
+
+![6655c9b5-6889-4a11-91b8-da7cb0c0c4ca](https://raw.githubusercontent.com/songqi4485/RL_Git/main/6655c9b5-6889-4a11-91b8-da7cb0c0c4ca.png)
+
+### 3）Actor 的梯度上升更新
+
+由于目标是最大化 $J(\theta)$，故采用梯度上升
+$$
+\theta \leftarrow \theta+\beta \nabla_\theta J(\theta)
+$$
+其中 $\beta$ 为 actor 的学习率。代入上式可得
+$$
+\theta
+\leftarrow
+\theta
++
+\beta
+\frac{\partial \pi(s;\theta)}{\partial \theta}
+\cdot
+\frac{\partial q(s,a;w)}{\partial a}\Big|_{a=\pi(s;\theta)}
+$$
+
+## 16.7 Bootstrapping 与 Target Network 
+
+### 1）Bootstrapping 的含义
+
+在 TD 学习中，critic 对当前状态-动作对的更新依赖于下一时刻价值估计
+$$
+q(s_{t+1},a'_{t+1};w)
+$$
+也就是说，网络正在使用“自己对未来的估计”来修正“自己对当前的估计”。 将这一现象概括为：
+$$
+{Bootstrapping: Using one's estimate to update oneself}
+$$
+这种机制提升了样本效率，但也会带来训练不稳定性，因为目标值本身也在随参数变化。
+
+### 2）为什么要引入 target network
+
+为降低 bootstrapping 引起的目标漂移。用**不同网络**来计算 TD target。具体做法是引入：
+
+* target policy network：$\pi(s;\theta^-)$
+* target value network：$q(s,a;w^-)$
+
+于是，下一时刻动作和下一时刻价值不再由当前在线网络直接给出，而是改为
+$$
+a'_{t+1}=\pi(s_{t+1};\theta^-),q^-_{t+1}=q(s_{t+1},a'_{t+1};w^-)
+$$
+从而 TD target 写为
+$$
+y_t=r_t+\gamma q^-_{t+1}
+$$
+这样做的目的不是改变 Bellman 目标，而是让目标值变化得更平缓，从而提高训练稳定性。
+
+### 3）Target network 的软更新
+
+target network 的加权平均更新方式：
+$$
+w^- \leftarrow \tau w + (1-\tau)w^-,\theta^- \leftarrow \tau \theta + (1-\tau)\theta^-
+$$
+其中 $\tau\in(0,1)$ 为超参数。
+
+这种更新方式常称为**软更新**。其意义在于：目标网络不是瞬时复制在线网络，而是缓慢跟随在线网络变化，从而避免 TD 目标发生剧烈波动。
+
+## 16.8 DPG 的完整训练流程
+
+### 1）策略决策
+
+当前策略网络根据状态 $s_t$ 输出动作
+$$
+a_t=\pi(s_t;\theta)
+$$
+
+### 2）环境交互并形成样本
+
+与环境交互后得到 transition
+$$
+(s_t,a_t,r_t,s_{t+1})
+$$
+
+### 3）计算 TD 目标
+
+目标策略网络产生下一动作
+$$
+a'_{t+1}=\pi(s_{t+1};\theta^-)
+$$
+目标价值网络计算下一状态-动作对价值
+$$
+q^-_{t+1}=q(s_{t+1},a'_{t+1};w^-)
+$$
+因而 TD target 为
+$$
+y_t=r_t+\gamma q^-_{t+1}
+$$
+
+### 4）更新 critic
+
+计算 TD 误差
+$$
+\delta_t=q(s_t,a_t;w)-y_t
+$$
+用梯度下降更新
+$$
+w\leftarrow w-\alpha\,\delta_t\,\nabla_w q(s_t,a_t;w)
+$$
+
+### 5）更新 actor
+
+用确定性策略梯度更新
+$$
+\theta
+\leftarrow
+\theta
++
+\beta
+\frac{\partial \pi(s_t;\theta)}{\partial \theta}
+\cdot
+\frac{\partial q(s_t,a;w)}{\partial a}\Big|_{a=\pi(s_t;\theta)}
+$$
+
+### 6）更新 target network
+
+用软更新规则同步目标网络
+$$
+w^- \leftarrow \tau w + (1-\tau)w^-,\theta^- \leftarrow \tau \theta + (1-\tau)\theta^-
+$$
+
+## 16.9 随机策略与确定性策略的区别
+
+### 1）输出对象不同
+
+随机策略输出的是条件分布。确定性策略输出的是确定动作。
+
+### 2）控制方式不同
+
+对随机策略而言，控制时需要先得到概率分布，再从分布中采样动作。
+
+对确定性策略而言，控制时直接使用网络输出的动作即可。
+
+## 16.10 结论
+
+* **连续控制的困难不在于奖励函数改变，而在于动作空间结构改变**。动作从有限集合变为连续空间后，许多依赖动作枚举的算法框架将失去可操作性。
+* **DQN 不能直接处理连续动作空间**。其根本原因在于 DQN 输出结构默认“每个动作对应一个价值输出”，这一假设只在离散动作空间中成立。
+* **简单离散化并非一般解**。当动作自由度为 $d$、每维离散粒度为 $k$ 时，总动作数为 $k^d$，会迅速遭遇维度灾难。
+* **DPG 通过确定性 Actor-Critic 框架，将连续控制问题转化为“actor 产生动作、critic 评估动作、再由 critic 的梯度反向改进 actor”的问题**。这是本讲最核心的算法思想。
+* 第五结论是：DPG 的数学核心有两条更新公式：
+
+​	critic 的 TD 更新：
+$$
+w\leftarrow w-\alpha\,\delta_t\,\nabla_w q(s_t,a_t;w)
+$$
+​	actor 的确定性策略梯度更新：
+$$
+\theta
+\leftarrow
+\theta
++
+\beta
+\frac{\partial \pi(s_t;\theta)}{\partial \theta}
+\cdot
+\frac{\partial q(s_t,a;w)}{\partial a}\Big|_{a=\pi(s_t;\theta)}
+$$
+
+# 17.随机策略在连续控制中的建模与训练
+
+## 17.1 建模前提
+
+* 动作 $\mathbf{a}=(a_1,\dots,a_d)$ 为 $d$ 维向量。
+
+* 设策略在给定状态 $s$ 时服从**各维独立的高斯分布**，即采用对角协方差建模，而非全协方差建模。
+
+## 17.2 策略网络的参数化
+
+### 1）一维动作情形
+
+当动作空间满足 $\mathcal{A}\subset \mathbb{R}$ 时，将策略写成一维正态分布的概率密度函数：
+$$
+\pi(a\mid s)
+=
+\frac{1}{\sqrt{2\pi}\sigma(s)}
+\exp\!\left(
+-\frac{(a-\mu(s))^2}{2\sigma^2(s)}
+\right)
+$$
+其中：
+
+* $\mu(s)$ 是状态 $s$ 下动作分布的均值
+* $\sigma(s)$ 是状态 $s$ 下动作分布的标准差
+
+### 2）多维动作情形
+
+当动作是 $d$ 维向量时，将策略写为
+$$
+\pi(\mathbf{a}\mid s)
+=
+\prod_{i=1}^{d}
+\frac{1}{\sqrt{2\pi}\sigma_i(s)}
+\exp\!\left(
+-\frac{(a_i-\mu_i(s))^2}{2\sigma_i^2(s)}
+\right)
+$$
+其中：
+$$
+\boldsymbol{\mu}(s)=(\mu_1(s),\dots,\mu_d(s)),\qquad
+\boldsymbol{\sigma}(s)=(\sigma_1(s),\dots,\sigma_d(s))
+$$
+因而，连续动作策略不再输出“每个动作的概率”，而是输出**动作分布的参数**。
+
+## 17.3 函数逼近
+
+最直接的逼近思路：
+
+* 用神经网络逼近均值函数 $\boldsymbol{\mu}(s)$
+* 用神经网络逼近标准差函数 $\boldsymbol{\sigma}(s)$
+
+改为输出对数方差：
+$$
+\rho_i = \ln \sigma_i^2,\qquad i=1,\dots,d
+$$
+因此策略网络的两个输出分支变为：
+$$
+\boldsymbol{\mu}(s;\theta^\mu),\qquad
+\boldsymbol{\rho}(s;\theta^\rho)
+$$
+由此可恢复方差：
+$$
+\sigma_i^2 = \exp(\rho_i)
+$$
+![fe6a8cb8-dfc8-47bc-825a-c2f49f58be3e](https://raw.githubusercontent.com/songqi4485/RL_Git/main/fe6a8cb8-dfc8-47bc-825a-c2f49f58be3e.png)
+
+## 17.4  控制阶段：从状态到动作的计算过程
+
+* 观测状态 $s$
+
+* 由策略网络计算
+
+$$
+\hat{\boldsymbol{\mu}}=\boldsymbol{\mu}(s;\theta^\mu),\qquad
+\hat{\boldsymbol{\rho}}=\boldsymbol{\rho}(s;\theta^\rho)
+$$
+
+* 由对数方差恢复方差
+
+$$
+\hat{\sigma}_i^2=\exp(\hat{\rho}_i),\qquad i=1,\dots,d
+$$
+
+* 对每个维度采样动作
+
+$$
+a_i\sim \mathcal{N}(\hat{\mu}_i,\hat{\sigma}_i^2),\qquad i=1,\dots,d
+$$
+
+因此，策略网络本身并不直接输出最终动作，而是输出**动作分布的参数**；最终动作由采样得到。
+
+## 17.5 训练难点
+
+在连续动作空间中，训练目标仍然是最大化期望回报，但实现策略梯度时需要计算
+$$
+\nabla_\theta \ln \pi(\mathbf{a}\mid s;\theta)
+$$
+由于 $\pi(\mathbf{a}\mid s;\theta)$ 是高斯密度函数，采用的关键技巧是：**将对数策略写成一个可自动求导的标量函数 $f(s,\mathbf{a};\theta)$ 加常数项的形式**，从而把对数策略的梯度转化为普通网络输出的梯度。
+
+## 17.6 两种具体训练算法
+
+### 1） Actor-Critic
+
+第一种实现是 Actor-Critic。其思想是用价值网络 $q(s,a;w)$ 逼近动作价值函数：
+$$
+Q^\pi(s,a)\approx q(s,a;w)
+$$
+因此策略网络更新式为
+$$
+\theta
+\leftarrow
+\theta
++
+\beta\,
+\nabla_\theta f(s,\mathbf{a};\theta)\,
+q(s,\mathbf{a};w)
+$$
+同时，价值网络通过 TD 学习更新。
+
+### 2）REINFORCE
+
+该方法不显式学习 $Q^\pi$，而是直接用采样轨迹的观测回报近似：
+$$
+u_t
+=
+r_t+\gamma r_{t+1}+\gamma^2 r_{t+2}+\gamma^3 r_{t+3}+\cdots 
+$$
+对应的策略更新式为
+$$
+\theta
+\leftarrow
+\theta
++
+\beta\,
+\nabla_\theta f(s_t,a_t;\theta)\,
+u_t
+$$
