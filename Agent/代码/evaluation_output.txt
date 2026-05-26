@@ -1,0 +1,56 @@
+===== STDOUT =====
+Using evaluation criteria: criteria={'tool_trajectory_avg_score': 1.0, 'response_match_score': 0.8} custom_metrics=None user_simulator_config=None
+
+
+===== STDERR =====
+/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/authlib/_joserfc_helpers.py:8: AuthlibDeprecationWarning: authlib.jose module is deprecated, please use joserfc instead.
+It will be compatible before version 2.0.0.
+  from authlib.jose import ECKey
+/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/features/_feature_decorator.py:72: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+2026-04-28 08:22:54,848 - INFO - utils.py:151 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 16.
+2026-04-28 08:22:54,848 - INFO - utils.py:164 - NumExpr defaulting to 16 threads.
+/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/evaluation/metric_evaluator_registry.py:112: UserWarning: [EXPERIMENTAL] MetricEvaluatorRegistry: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  metric_evaluator_registry = MetricEvaluatorRegistry()
+/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/evaluation/local_eval_service.py:124: UserWarning: [EXPERIMENTAL] UserSimulatorProvider: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  user_simulator_provider: UserSimulatorProvider = UserSimulatorProvider(),
+Traceback (most recent call last):
+  File "/root/.pyenv/versions/3.11.1/bin/adk", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/click/core.py", line 1697, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_tools_click.py", line 127, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_tools_click.py", line 717, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_tools_click.py", line 837, in cli_eval
+    root_agent = get_root_agent(agent_module_file_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_eval.py", line 91, in get_root_agent
+    agent_module = _get_agent_module(agent_module_file_path)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_eval.py", line 73, in _get_agent_module
+    return _import_from_path(module_name, file_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.pyenv/versions/3.11.1/lib/python3.11/site-packages/google/adk/cli/cli_eval.py", line 66, in _import_from_path
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1073, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1130, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/Agent/__init__.py'
